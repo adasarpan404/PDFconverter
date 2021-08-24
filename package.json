@@ -12,5 +12,13 @@
   "dependencies": {
     "handlebars": "^4.7.7",
     "html-pdf": "^3.0.1"
-  }
+  }, 
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adasarpan404/PDFconverter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adasarpan404/PDFconverter/issues"
+  }, 
+  "homepage": "https://github.com/adasarpan404/PDFconverter#README"
 }
