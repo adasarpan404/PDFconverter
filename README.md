@@ -2,7 +2,7 @@
 
 - Step 1 - install the pdf creator package using the following command
 
-  `$ npm i pdf-creator-node --save`
+  `$ npm i PDF-converter --save`
 
   > --save flag adds package name to package.json file.
 
@@ -10,7 +10,7 @@
 
  ```javascript
   //Required package
-  var pdf = require("pdf-creator-node");
+  var pdf = require("PDF-converter");
   var fs = require("fs");
 
   // Read HTML Template
@@ -51,7 +51,7 @@
   > "orientation": "portrait", // portrait or landscape
 
     ```javascript
-        var options = {
+        var opt = {
             format: "A3",
             orientation: "portrait",
             border: "10mm",
@@ -88,7 +88,7 @@
       age: "26",
     },
   ];
-  var document = {
+  var doc = {
     html: html,
     data: {
       users: users,
@@ -103,7 +103,7 @@
 
   ```javascript
   pdf
-    .create(document, options)
+    .convert(document, options)
     .then((res) => {
       console.log(res);
     })
