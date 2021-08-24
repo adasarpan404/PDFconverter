@@ -1,5 +1,5 @@
 {
-  "name": "pdf-converter",
+  "name": "converter-pdf-html",
   "version": "1.0.0",
   "description": "convert HTML to PDF",
   "main": "index.js",
