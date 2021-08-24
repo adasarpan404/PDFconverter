@@ -122,4 +122,4 @@ Please refer to the following if you want to use conditions in your HTML templat
 
 ### License
 
-pdf-creator-node is [MIT licensed](./LICENSE).
+PDF-converter is [MIT licensed](./LICENSE).
