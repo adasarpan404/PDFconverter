@@ -103,7 +103,7 @@
 
   ```javascript
   pdf
-    .convert(document, options)
+    .convert(doc, opt)
     .then((res) => {
       console.log(res);
     })
