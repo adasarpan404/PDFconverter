@@ -8,15 +8,15 @@ var convert = (doc, opt) => {
             reject(new Error("some, or all , options are missing."))
         }
         var HTML = handlebars.compile(doc.html)(doc.data);
-        var PromiseFor = pdf.create(HTML, opt)
+        var Promise = pdf.create(HTML, opt)
 
         switch (doc.type) {
             case "buffer":
-                PromiseFor.toBuffer((err, res) => {
+                Promise.toBuffer((err, res) => {
                     if (!err) resolve(res);
                     else reject(err);
                 });
-                breask;
+                break;
             case "stream":
                 PromiseFor.toStream((err, res) => {
                     if (!err) resolve(res);
