@@ -1,0 +1,16 @@
+{
+  "name": "pdf-converter",
+  "version": "1.0.0",
+  "description": "convert HTML to PDF",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arpan Das",
+  "license": "MIT",
+  "dependencies": {
+    "handlebars": "^4.7.7",
+    "html-pdf": "^3.0.1"
+  }
+}
