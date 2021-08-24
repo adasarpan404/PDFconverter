@@ -2,7 +2,7 @@
 
 - Step 1 - install the pdf creator package using the following command
 
-  `$ npm i PDF-converter --save`
+  `$ npm i pdf-converter --save`
 
   > --save flag adds package name to package.json file.
 
@@ -10,7 +10,7 @@
 
  ```javascript
   //Required package
-  var pdf = require("PDF-converter");
+  var pdf = require("pdf-converter");
   var fs = require("fs");
 
   // Read HTML Template
@@ -122,4 +122,4 @@ Please refer to the following if you want to use conditions in your HTML templat
 
 ### License
 
-PDF-converter is [MIT licensed](./LICENSE).
+pdf-converter is [MIT licensed](./LICENSE).
