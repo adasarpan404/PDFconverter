@@ -12,20 +12,24 @@
     "pdf-html"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --exit"
   },
   "author": "adasarpan",
   "license": "MIT",
   "dependencies": {
     "handlebars": "^4.7.7",
     "html-pdf": "^3.0.1"
-  }, 
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "chai": "^4.3.8"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/adasarpan404/PDFconverter.git"
   },
   "bugs": {
     "url": "https://github.com/adasarpan404/PDFconverter/issues"
-  }, 
+  },
   "homepage": "https://github.com/adasarpan404/PDFconverter#README"
 }
