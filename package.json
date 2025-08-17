@@ -12,7 +12,8 @@
     "pdf-html"
   ],
   "scripts": {
-    "test": "mocha --exit"
+    "test": "mocha --exit",
+    "coverage": "nyc --reporter=text --reporter=lcov npm test && nyc check-coverage --lines 100 --functions 100 --branches 100 --statements 100"
   },
   "author": "adasarpan",
   "license": "MIT",
@@ -22,7 +23,8 @@
   },
   "devDependencies": {
     "mocha": "^10.2.0",
-    "chai": "^4.3.8"
+    "chai": "^4.3.8",
+    "nyc": "^15.1.0"
   },
   "repository": {
     "type": "git",
