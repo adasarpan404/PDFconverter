@@ -47,10 +47,8 @@ describe('convert', () => {
             const res = await convert({ html: '<p>{{foo}}</p>', data: { foo: 'bar' }, type: 'buffer' }, {});
             expect(Buffer.isBuffer(res)).to.be.true;
             expect(res.toString()).to.equal('PDF_OK');
-            // ensure Handlebars compiled template was passed
             expect(capturedHtml).to.equal('<p>bar</p>');
         } finally {
-            // restore original
             pdf.create = originalCreate;
         }
     });
