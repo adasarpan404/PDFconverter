@@ -1,125 +1,107 @@
-# Follow these steps to convert HTML to PDF
+# converter-pdf-html — HTML to PDF converter
 
-- Step 1 - install the pdf creator package using the following command
+A small utility that converts HTML templates into PDF files using Handlebars for templating and html-pdf for PDF generation.
 
-  `$ npm i converter-pdf-html --save`
+## Installation
 
-  > --save flag adds package name to package.json file.
+Install the package from npm:
 
-- Step 2 - Add required packages and read HTML template
+```bash
+npm install converter-pdf-html --save
+```
 
- ```javascript
-  //Required package
-  var pdf = require("converter-pdf-html");
-  var fs = require("fs");
+## Usage
 
-  // Read HTML Template
-  var html = fs.readFileSync("template.html", "utf8");
-  ```
+Require the package and call `convert(doc, options)`. The function returns a Promise that resolves with the generated output (Buffer, Stream or file info) or rejects on error.
 
-- Step 3 - Create your HTML Template
+```javascript
+const pdf = require('converter-pdf-html');
 
-  ```html
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <mate charest="utf-8" />
-      <title>Hello world!</title>
-    </head>
-    <body>
-      <h1>User List</h1>
-      <ul>
-        {{#each users}}
-        <li>Name: {{this.name}}</li>
-        <li>Age: {{this.age}}</li>
-        <br />
-        {{/each}}
-      </ul>
-    </body>
-  </html>
-  ```
-- Step 4 - Provide format and orientation as per your need
+const doc = {
+  html: '<p>{{message}}</p>',
+  data: { message: 'Hello world' },
+  // path is used when producing a file (default behavior)
+  path: './output.pdf',
+  // type can be 'buffer', 'stream' or omitted for a file
+  type: 'buffer'
+};
 
-  > "height": "10.5in", // allowed units: mm, cm, in, px
+const options = {
+  format: 'A4',
+  orientation: 'portrait',
+  border: '10mm'
+};
 
-  > "width": "8in", // allowed units: mm, cm, in, px
+pdf
+  .convert(doc, options)
+  .then((result) => {
+    // when type === 'buffer' -> result is a Buffer
+    // when type === 'stream' -> result is a Readable stream
+    // when omitted -> result is an object containing the written file path
+    console.log('Success:', result);
+  })
+  .catch((err) => console.error('Error:', err));
+```
 
-  - or -
+## API
 
-  > "format": "Letter", // allowed units: A3, A4, A5, Legal, Letter, Tabloid
+convert(doc, options) -> Promise
 
-  > "orientation": "portrait", // portrait or landscape
+- doc (object, required)
+  - html (string) — Handlebars-compatible HTML template. Required.
+  - data (object) — Data passed to the template. Required.
+  - path (string) — Output file path when creating a file (default behavior).
+  - type (string) — One of:
+    - `'buffer'` — resolve with a Buffer containing the PDF data.
+    - `'stream'` — resolve with a readable stream of the PDF data.
+    - omitted or any other value — write a file at `doc.path` and resolve with file info.
 
-    ```javascript
-        var opt = {
-            format: "A3",
-            orientation: "portrait",
-            border: "10mm",
-            header: {
-                height: "45mm",
-                contents: '<div style="text-align: center;">Author: Arpan Das</div>'
-            },
-            footer: {
-                height: "28mm",
-                contents: {
-                    first: 'Cover page',
-                    2: 'Second page', // Any page number is working. 1-based index
-                    default: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
-                    last: 'Last Page'
-                }
-            }
-        };
-    ```
-    
-    - Step 5 - Provide HTML, user data and PDF path for output
+- options (object, optional) — pdf generation options passed to html-pdf. Common options:
+  - `format` — e.g. 'A3', 'A4', 'A5', 'Legal', 'Letter', 'Tabloid'.
+  - `width` / `height` — custom dimensions (e.g. '8in', '210mm').
+  - `orientation` — 'portrait' or 'landscape'.
+  - `border` — margins, e.g. '10mm'.
+  - `header` and `footer` — objects with `height` and `contents` (string or object) as supported by html-pdf.
 
-  ```javascript
-  var users = [
-    {
-      name: "Shyam",
-      age: "26",
-    },
-    {
-      name: "Navjot",
-      age: "26",
-    },
-    {
-      name: "Vitthal",
-      age: "26",
-    },
-  ];
-  var doc = {
-    html: html,
-    data: {
-      users: users,
-    },
-    path: "./your.pdf",
-    type: "",
-  };
-  // By default a file is created but you could switch between Buffer and Streams by using "buffer" or "stream" respectively.
-  ```
+Refer to html-pdf documentation for the full list of available options: https://github.com/marcbachmann/node-html-pdf
 
-- Step 6 - After setting all parameters, just pass document and options to `pdf.create` method.
+## Examples
 
-  ```javascript
-  pdf
-    .convert(doc, opt)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  ```
+1) Create a file (default):
 
-## Reference
+```javascript
+const doc = { html, data: { users }, path: './users.pdf' };
+pdf.convert(doc, { format: 'A4' })
+  .then(info => console.log('Written:', info))
+  .catch(console.error);
+```
 
-Please refer to the following if you want to use conditions in your HTML template:
+2) Get a Buffer instead of writing a file:
 
-- https://handlebarsjs.com/builtin_helpers.html
+```javascript
+const doc = { html, data: { users }, type: 'buffer' };
+pdf.convert(doc)
+  .then(buffer => {
+    // write buffer to disk, send over network, etc.
+  })
+  .catch(console.error);
+```
 
-### End
+## Testing
 
-### License
+To run the test suite locally:
 
-pdf-converter is [MIT licensed](./LICENSE).
+```bash
+npm install
+npm test
+```
+
+The project includes unit tests that check error cases and a successful buffer generation using a stub for the underlying PDF renderer.
+
+## Contributing
+
+Contributions, issues and feature requests are welcome. Please open an issue or submit a pull request on GitHub.
+
+## License
+
+This project is MIT licensed — see the `LICENSE` file for details.
