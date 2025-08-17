@@ -31,4 +31,21 @@ describe('convert', () => {
             expect(err.message).to.match(/options are missing/);
         }
     });
+
+    it('resolves with a buffer when type is buffer', async () => {
+        const pdf = require('html-pdf');
+        const originalCreate = pdf.create;
+        pdf.create = (html, opt) => ({
+            toBuffer: (cb) => cb(null, Buffer.from('PDF_OK'))
+        });
+
+        try {
+            const res = await convert({ html: '<p>{{foo}}</p>', data: { foo: 'bar' }, type: 'buffer' }, {});
+            expect(Buffer.isBuffer(res)).to.be.true;
+            expect(res.toString()).to.equal('PDF_OK');
+        } finally {
+            // restore original
+            pdf.create = originalCreate;
+        }
+    });
 });
